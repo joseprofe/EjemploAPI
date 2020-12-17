@@ -33,11 +33,18 @@ namespace KaynJungle
         {
             services.AddControllers();
 
+            //Para habilitar CORS en nuestra API
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             //Aquí inyección del contexto:
 
             services.AddDbContext<ConcesionarioDBContext>(opts => opts.UseMySql(Configuration["ConnectionString:TallerDB"]));
-
-
 
             //Aquí las inyecciones: Interfaz - Clase
             services.AddScoped<IUsuarioBL, UsuarioBL>();
@@ -57,6 +64,8 @@ namespace KaynJungle
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

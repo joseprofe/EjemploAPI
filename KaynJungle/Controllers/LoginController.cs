@@ -21,5 +21,11 @@ namespace KaynJungle.API.Controllers
         {
             return _usuarioBL.Login(usuarioDTO);
         }
+
+        [HttpGet]
+        public string Login()
+        {
+            return "Holi";
+        }
     }
 }
